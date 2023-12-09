@@ -1,8 +1,6 @@
 import math
 import sys
-import re
-from collections import defaultdict, Counter
-import functools
+from collections import defaultdict
 
 
 class Node:
@@ -29,14 +27,14 @@ totalCount = 0
 for node in validNodes:
     counter = 0
     currentNode = node
-    while(not currentNode.endswith("Z")):
+    while not currentNode.endswith("Z"):
         for command in c:
             counter = counter + 1
             match command:
                 case 'L':
-                        currentNode = nodes[currentNode][0]
+                    currentNode = nodes[currentNode][0]
                 case 'R':
-                        currentNode = nodes[currentNode][1]
+                    currentNode = nodes[currentNode][1]
     if totalCount == 0:
         totalCount = counter
     else:

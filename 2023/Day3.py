@@ -1,8 +1,8 @@
 import re
 
-# Puzzle 1
 
-def solvePuzzle1() :
+# Puzzle 1
+def solve_puzzle1():
     lines = []
     count = 0
     while True:
@@ -15,31 +15,31 @@ def solvePuzzle1() :
     for line in lines:
         results = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", line)]
         for result in results:
-            isValidPart = False
+            is_valid_part = False
+            ir = 0 if result[0] == 0 else result[0] - 1
+            er = len(line) if result[1] == len(line) else result[1] + 1
             if pointer != 0:
-                oldline = lines[pointer - 1]
-                matchString = oldline[0 if result[0]==0 else result[0]-1 : len(line) if result[1] == len(line) else result[1]+1 : 1]
-                if len(re.findall("^[\d\.]+$", matchString))==0:
-                   isValidPart = True
-            if pointer < len(lines)-1:
-                oldline = lines[pointer + 1]
-                matchString = oldline[0 if result[0]==0 else result[0]-1 : len(line) if result[1] == len(line) else result[1]+1 : 1]
-                if len(re.findall("^[\d\.]+$", matchString))==0:
-                  isValidPart = True
-            matchString = line[0 if result[0]==0 else result[0]-1 : len(line) if result[1] == len(line) else result[1]+1 : 1]
-            if len(re.findall("^[\d\.]+$", matchString))==0:
-                isValidPart = True
-            if isValidPart:
+                old_line = lines[pointer - 1]
+                m_string = old_line[ir: er: 1]
+                if len(re.findall('^[\d\.]+$', m_string)) == 0:
+                    is_valid_part = True
+            if pointer < len(lines) - 1:
+                old_line = lines[pointer + 1]
+                m_string = old_line[ir: er: 1]
+                if len(re.findall("^[\d\.]+$", m_string)) == 0:
+                    is_valid_part = True
+            m_string = line[ir: er: 1]
+            if len(re.findall("^[\d\.]+$", m_string)) == 0:
+                is_valid_part = True
+            if is_valid_part:
                 print(result[2])
                 count = count + int(result[2])
         pointer = pointer + 1
         print(count)
 
 
-
 # Puzzle 2
-
-def solvePuzzle2() :
+def solve_puzzle2():
     lines = []
     count = 0
     while True:
@@ -51,40 +51,37 @@ def solvePuzzle2() :
     pointer = 0
     for line in lines:
         results = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\*", line)]
-        # print(results)
         for result in results:
-            matchingParts = []
+            matching_parts = []
             if pointer != 0:
-                oldline = lines[pointer - 1]
-                oldline[0 if result[0]==0 else result[0]-1 : len(line) if result[1] == len(line) else result[1]+1 : 1]
-                partresults = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", oldline)]
-                for part in partresults:
-                    if isConnectingToStar(part, result):
-                        matchingParts.append(part)
-            if pointer < len(lines)-1:
-                oldline = lines[pointer + 1]
-                partresults = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", oldline)]
-                for part in partresults:
-                    if isConnectingToStar(part, result):
-                        matchingParts.append(part)
-            line[0 if result[0]==0 else result[0]-1 : len(line) if result[1] == len(line) else result[1]+1 : 1]
-            partresults = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", line)]
-            for part in partresults:
-                if isConnectingToStar(part, result):
-                    matchingParts.append(part)
-            if len(matchingParts) == 2:
-                print(matchingParts)
-                count = count + (int(matchingParts[0][2])*int(matchingParts[1][2]))
+                old_line = lines[pointer - 1]
+                part_results = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", old_line)]
+                for part in part_results:
+                    if is_connecting_to_star(part, result):
+                        matching_parts.append(part)
+            if pointer < len(lines) - 1:
+                old_line = lines[pointer + 1]
+                part_results = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", old_line)]
+                for part in part_results:
+                    if is_connecting_to_star(part, result):
+                        matching_parts.append(part)
+            part_results = [(m.start(0), m.end(0), m.group(0)) for m in re.finditer("\d+", line)]
+            for part in part_results:
+                if is_connecting_to_star(part, result):
+                    matching_parts.append(part)
+            if len(matching_parts) == 2:
+                print(matching_parts)
+                count = count + (int(matching_parts[0][2]) * int(matching_parts[1][2]))
         pointer = pointer + 1
 
         print(count)
 
 
-def isConnectingToStar(part, star):
-    if part[0]-1 <= star[0] and star[1] <= part[1]+1:
+def is_connecting_to_star(part, star):
+    if part[0] - 1 <= star[0] and star[1] <= part[1] + 1:
         return True
     else:
         return False
 
 
-solvePuzzle2()
+solve_puzzle2()

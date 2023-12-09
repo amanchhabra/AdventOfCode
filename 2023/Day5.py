@@ -1,122 +1,114 @@
 import re
 
+
 # Puzzle 1
-
-def solvePuzzle1() :
-  count = 0
-  secondattempt = False
-  while (True):
-      line = input()
-
-      # seeds
-      seeds = [int(seed) for seed in re.findall("\d+", line)]
-      data = []
-      while True:
-          line = input()
-          if line:
-              secondattempt = False;
-              if len(re.findall("\d+", line))!=0:
-                  data.append([int(soil) for soil in re.findall("\d+", line)])
-
-          else:
-              if secondattempt:
-                  break
-              else:
-                  for i in range(len(seeds)):
-                      for converter in data:
-                          if converter[1] <= seeds[i] <= (converter[1] + converter[2]):
-                              seeds[i] = converter[0]+(seeds[i]-converter[1])
-                              break
-                  secondattempt = True
-                  data = []
-      seeds.sort()
-      print(seeds[0])
-      break
-
-
-
-
-
-# Puzzle 2
-
-def solvePuzzle2() :
-    print([i for i in range(1,6)])
-    count = 0
-    secondattempt = False
-    while (True):
+def solve_puzzle1():
+    second_attempt = False
+    while True:
         line = input()
 
         # seeds
-        inputList = [int(seed) for seed in re.findall("\d+", line)]
+        seeds = [int(seed) for seed in re.findall("\d+", line)]
+        data = []
+        while True:
+            line = input()
+            if line:
+                second_attempt = False
+                if len(re.findall("\d+", line)) != 0:
+                    data.append([int(soil) for soil in re.findall("\d+", line)])
+
+            else:
+                if second_attempt:
+                    break
+                else:
+                    for i in range(len(seeds)):
+                        for converter in data:
+                            if converter[1] <= seeds[i] <= (converter[1] + converter[2]):
+                                seeds[i] = converter[0] + (seeds[i] - converter[1])
+                                break
+                    second_attempt = True
+                    data = []
+        seeds.sort()
+        print(seeds[0])
+        break
+
+
+# Puzzle 2
+def solve_puzzle2():
+    second_attempt = False
+    while True:
+        line = input()
+
+        # seeds
+        input_list = [int(seed) for seed in re.findall("\d+", line)]
         seeds = []
-        for i in range(len(inputList)):
-            if i%2==0:
-                seeds.append([inputList[i], inputList[i+1]])
+        for i in range(len(input_list)):
+            if i % 2 == 0:
+                seeds.append([input_list[i], input_list[i + 1]])
 
         data = []
 
         while True:
             line = input()
             if line:
-                secondattempt = False;
-                if len(re.findall("\d+", line))!=0:
+                second_attempt = False
+                if len(re.findall("\d+", line)) != 0:
                     data.append([int(soil) for soil in re.findall("\d+", line)])
 
             else:
-                if secondattempt:
+                if second_attempt:
                     break
                 elif len(data) > 0:
-                    newdata = []
-                    data.sort(key=sortSecond)
+                    new_data = []
+                    data.sort(key=sort_second)
                     print(data)
                     print(seeds)
                     print("till here")
-                    allConverted = False
                     while len(seeds) != 0:
-                        seeds.sort(key=sortFirst)
-                        converted = False;
+                        seeds.sort(key=sort_first)
+                        converted = False
                         for converter in data:
-                            if converter[1]>seeds[0][0]:
+                            if converter[1] > seeds[0][0]:
                                 converted = True
-                                diff = converter[1]-seeds[0][0]
+                                diff = converter[1] - seeds[0][0]
                                 if diff >= seeds[0][1]:
-                                    newdata.append(seeds[0])
+                                    new_data.append(seeds[0])
                                     seeds.pop(0)
                                 else:
-                                    newdata.append([seeds[0][0], diff])
-                                    seeds.append([seeds[0][0]+diff, seeds[0][1]-diff])
+                                    new_data.append([seeds[0][0], diff])
+                                    seeds.append([seeds[0][0] + diff, seeds[0][1] - diff])
                                     seeds.pop(0)
-                                break;
+                                break
                             elif converter[1] <= seeds[0][0] < (converter[1] + converter[2]):
                                 converted = True
-                                diff = converter[2]-(seeds[0][0]-converter[1])
+                                diff = converter[2] - (seeds[0][0] - converter[1])
                                 if diff >= seeds[0][1]:
-                                    newdata.append([seeds[0][0]-converter[1]+converter[0], seeds[0][1]])
+                                    new_data.append([seeds[0][0] - converter[1] + converter[0], seeds[0][1]])
                                     seeds.pop(0)
                                 else:
-                                    newdata.append([seeds[0][0]-converter[1]+converter[0], diff])
-                                    seeds.append([seeds[0][0]+diff, seeds[0][1]-diff])
+                                    new_data.append([seeds[0][0] - converter[1] + converter[0], diff])
+                                    seeds.append([seeds[0][0] + diff, seeds[0][1] - diff])
                                     seeds.pop(0)
                                 break
                         if not converted:
-                           newdata.append(seeds[0])
-                           seeds.pop(0)
+                            new_data.append(seeds[0])
+                            seeds.pop(0)
 
-
-
-                    if len(newdata) != 0 :
-                        seeds = newdata
-                    secondattempt = True
+                    if len(new_data) != 0:
+                        seeds = new_data
+                    second_attempt = True
                     data = []
-        seeds.sort(key=sortFirst)
+        seeds.sort(key=sort_first)
         print(seeds[0][0])
-        # print(seeds[0])
         break
 
-def sortSecond(val):
+
+def sort_second(val):
     return val[1]
 
-def sortFirst(val):
+
+def sort_first(val):
     return val[0]
 
-solvePuzzle2()
+
+solve_puzzle2()

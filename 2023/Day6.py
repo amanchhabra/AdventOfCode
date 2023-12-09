@@ -1,8 +1,8 @@
 import re
 
-# Puzzle 1
 
-def solvePuzzle1() :
+# Puzzle 1
+def solve_puzzle1():
     count = 0
     line = input()
     times = [int(time) for time in re.findall('\d+', line)]
@@ -14,7 +14,7 @@ def solvePuzzle1() :
         ways = 0
         speed = 0
         for second in range(times[time]):
-            if(speed*(times[time]-second))>distances[time]:
+            if(speed*(times[time]-second)) > distances[time]:
                 ways = ways+1
             speed = speed + 1
         if count == 0:
@@ -24,13 +24,8 @@ def solvePuzzle1() :
     print(count)
 
 
-
-
-
-
 # Puzzle 2
-
-def solvePuzzle2() :
+def solve_puzzle2():
     count = 0
     line = input()
     times = [int("".join(re.findall('\d+', line)))]
@@ -41,7 +36,7 @@ def solvePuzzle2() :
         ways = 0
         speed = 0
         for second in range(times[time]):
-            if(speed*(times[time]-second))>distances[time]:
+            if(speed*(times[time]-second)) > distances[time]:
                 ways = ways+1
             speed = speed + 1
         if count == 0:
@@ -50,4 +45,5 @@ def solvePuzzle2() :
             count = count * ways
     print(count)
 
-solvePuzzle2()
+
+solve_puzzle2()

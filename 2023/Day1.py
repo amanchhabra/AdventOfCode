@@ -1,35 +1,37 @@
 import re
 
-# Puzzle 1
 
-def solvePuzzle1() :
+# Puzzle 1
+def solve_puzzle1():
     count = 0
     while True:
         line = input()
         if line:
             results = re.findall('\d', line)
-            number1 = getNumber(results[0])
-            number2 = getNumber(results[-1])
+            number1 = get_number(results[0])
+            number2 = get_number(results[-1])
             count = count + (number1 * 10 + number2)
         else:
             print(count)
-            break;
+            break
+
 
 # Puzzle 2
-def solvePuzzle2() :
+def solve_puzzle2():
     count = 0
     while True:
         line = input()
         if line:
-            results = re.findall('(?=(one|two|three|four|five|six|seven|eight|nine|zero|[0-9]))',line)
-            number1 = getNumber(results[0])
-            number2 = getNumber(results[-1])
+            results = re.findall('(?=(one|two|three|four|five|six|seven|eight|nine|zero|[0-9]))', line)
+            number1 = get_number(results[0])
+            number2 = get_number(results[-1])
             count = count + (number1 * 10 + number2)
         else:
             print(count)
-            break;
+            break
 
-def getNumber(data):
+
+def get_number(data):
     if len(data) == 1:
         return int(data)
     match data:
@@ -42,4 +44,6 @@ def getNumber(data):
         case 'seven': return 7
         case 'eight': return 8
         case 'nine': return 9
-solvePuzzle2()
+
+
+solve_puzzle2()

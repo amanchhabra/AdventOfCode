@@ -1,12 +1,6 @@
 import sys
-import re
-from collections import defaultdict, Counter
-import functools
+from collections import defaultdict
 
-class Node:
-    node = None
-    left = ""
-    right = ""
 D = open(sys.argv[1]).read().strip()
 L = D.split("\n")
 
@@ -17,12 +11,12 @@ for row in L[2:]:
     node = row.split(" = ")[0]
     left = row.split(" = ")[1].split(", ")[0][1:]
     right = row.split(" = ")[1].split(", ")[1][:3]
-    nodes[node]=[left,right]
+    nodes[node] = [left, right]
 
 
 currentNode = "AAA"
 counter = 0
-while currentNode!= "ZZZ":
+while currentNode != "ZZZ":
     for command in c:
         counter = counter + 1
         match command:
@@ -31,4 +25,3 @@ while currentNode!= "ZZZ":
             case 'R':
                 currentNode = nodes[currentNode][1]
 print(counter)
-
